@@ -12,8 +12,8 @@ DATABASE_URL=postgresql://USER:PASSWORD@your-host:5432/postgres?sslmode=require
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-publishable-key
 SUPABASE_SERVICE_ROLE_KEY=your-secret-key
-SUPABASE_PRODUCT_BUCKET=Sulthan_porur
-SULTHAN_HARDWARE_TENANT_ID=1001
+SUPABASE_PRODUCT_BUCKET=storefront-images
+STORE_TENANT_ID=1001
 ```
 
 `DATABASE_URL` is a server-side database credential. Keep it private and use a restricted database role where practical. `SUPABASE_SERVICE_ROLE_KEY` must be a Supabase secret key (or legacy `service_role` key); a publishable/anon key cannot upload to Storage. It is server-only and is needed for image uploads and signed URLs for a private bucket. Do not prefix it with `NEXT_PUBLIC_` or commit any secret values. Restart the app after environment changes.
@@ -22,15 +22,15 @@ Product and hero images are accepted as JPEG, PNG, or WebP, optimized in the bro
 
 Super admins and authorized store owners can manage up to 10 storefront hero images at `/admin/hero-images`. Apply `supabase/migrations/005_tenant_hero_images.sql` before using this page. Hero image files are stored in the configured Storage bucket, while their tenant, storage path, and display order are stored in `public.tenant_hero_images`. The storefront rotates through configured hero images and uses its built-in image if none have been uploaded.
 
-Each storefront slug maps to its database ID using server-side configuration such as `SULTHAN_HARDWARE_TENANT_ID`, not a hard-coded ID. API routes verify the configured ID and slug match `public.tenants`, and associate product records with that ID. Admin role and tenant assignment are read from `public.admin_accounts`.
+The configured storefront slug maps to its database tenant ID using the server-side `STORE_TENANT_ID`; the ID is not hard-coded. API routes verify that the configured tenant exists in `public.tenants` and associate product records with that ID. Admin role and tenant assignment are read from `public.admin_accounts`.
 
 ## Prepare the database and create the first admin
 
 1. For a new database, apply `supabase/migrations/001_initial_multi_tenant.sql`. For the existing database, make sure `supabase/migrations/002_integer_tenant_ids_and_rls.sql` has already been applied.
 2. Apply `supabase/migrations/003_application_admin_accounts.sql` to create the admin account and session tables.
 3. Apply `supabase/migrations/004_integer_public_entity_ids.sql` to use integer IDs for public application entities. The migration keeps the Supabase Auth user ID as text and stops rather than converting populated UUID-based tables without an explicit ID mapping.
-4. Set `DATABASE_URL` and `SULTHAN_HARDWARE_TENANT_ID` in `.env.local`, and ensure the configured tenant exists.
-5. Run `npm run admin:create-super` in an interactive terminal to create the first super admin. Enter the admin email and temporary password at the hidden prompts. The password must be at least 12 characters; it is not echoed, logged, or saved as plaintext. Use `npm run admin:create` to create a store owner for the configured tenant.
+4. Set `DATABASE_URL` and `STORE_TENANT_ID` in `.env.local`, and ensure the configured tenant exists.
+5. Run `npm run admin:create-super` in an interactive terminal to create the first super admin. Enter the admin email and temporary password at the hidden prompts. The password can be any non-empty value up to 1,024 characters; it is not echoed, logged, or saved as plaintext. Use `npm run admin:create` to create a store owner for the configured tenant.
 6. Give the owner the initial credentials through a secure channel. On first sign-in, the app requires them to set a different password. Their session is revoked after changing it.
 
 The sign-in page has no unauthenticated email-based password reset, since no mail delivery/recovery provider is configured. An operator can reset an account by running `npm run admin:reset-password` in an interactive terminal; all existing sessions are revoked and the user must change the replacement password at next sign-in.

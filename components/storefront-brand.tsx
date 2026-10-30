@@ -10,13 +10,13 @@ export function StorefrontBrand({ tenant }: StorefrontBrandProps) {
   return (
     <div className="flex min-w-0 items-center gap-3">
       <Link href="/" aria-label={`Go to ${tenant.name} home page`} className="shrink-0">
-        <span className="block aspect-[2.5] w-36 overflow-hidden rounded-xl bg-white">
+        <span className="block aspect-square w-24 overflow-hidden rounded-xl bg-white p-1">
           <Image
             src={tenant.logo.src}
             alt={tenant.logo.alt}
-            width={1902}
-            height={827}
-            className="h-full w-full object-cover object-top"
+            width={1254}
+            height={1254}
+            className="h-full w-full object-contain"
           />
         </span>
       </Link>

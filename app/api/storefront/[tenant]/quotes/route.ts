@@ -124,7 +124,7 @@ export async function POST(request: Request, { params }: RouteProps) {
 
     const tenant = await client.query(
       "select id from public.tenants where id = $1 and slug = $2 limit 1",
-      [tenantId, storefront.slug],
+      [tenantId, storefront.databaseSlug],
     );
     if (!tenant.rows[0]) {
       await rollback(client);

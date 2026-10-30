@@ -30,6 +30,8 @@ A new store owner signs up, picks a subdomain like `greenvalleypharmacy.yourapp.
 
 Each store instance carries its own tenant config ID, set once at the application/configuration level (an environment variable or a config record tied to the subdomain). Every backend request — API route, database query, storage call — must send that config ID, rather than inferring it from the logged-in user alone. The backend uses it to scope every query, and Supabase row-level security double-checks it against the row's `tenant_id`, so a mismatch is rejected at the database layer even if a bug let a wrong ID slip through at the application layer.
 
+The storefront URL slug may differ from the database tenant slug. In that case, set `databaseSlug` in the storefront configuration to the exact slug stored in `public.tenants`; the configured tenant ID and database slug are both checked before serving store data.
+
 ## Data model
 
 Core tables, every one scoped by `tenant_id` except `tenants` and `users` themselves:

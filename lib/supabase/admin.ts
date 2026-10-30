@@ -44,4 +44,4 @@ export function getSupabaseAdmin() {
   });
 }
 
-export const productImageBucket = process.env.SUPABASE_PRODUCT_BUCKET || "Sulthan_porur";
+export const productImageBucket = process.env.SUPABASE_PRODUCT_BUCKET || "storefront-images";

@@ -77,10 +77,10 @@ export async function PATCH(request: Request, { params }: RouteProps) {
   if (
     temporaryPassword !== undefined &&
     (typeof temporaryPassword !== "string" ||
-      temporaryPassword.length < 12 ||
+      temporaryPassword.length === 0 ||
       temporaryPassword.length > 1024)
   ) {
-    return NextResponse.json({ error: "Temporary passwords must be between 12 and 1024 characters." }, { status: 400 });
+    return NextResponse.json({ error: "Temporary passwords must not be empty and must be 1024 characters or fewer." }, { status: 400 });
   }
 
   try {

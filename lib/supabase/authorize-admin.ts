@@ -44,7 +44,7 @@ export async function authorizeStoreAdmin(tenantSlug: string) {
   try {
     const result = await pool.query<{ id: number }>(
       "select id from public.tenants where id = $1 and slug = $2 limit 1",
-      [tenantId, storefront.slug],
+      [tenantId, storefront.databaseSlug],
     );
     if (!result.rows[0]) {
       return NextResponse.json(

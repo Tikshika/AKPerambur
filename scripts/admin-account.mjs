@@ -70,9 +70,9 @@ async function main() {
     throw new Error("Enter a valid email address.");
   }
 
-  const password = await promptSecret("Temporary password (12+ characters): ");
-  if (password.length < 12 || password.length > 1024) {
-    throw new Error("Password must be between 12 and 1024 characters.");
+  const password = await promptSecret("Temporary password: ");
+  if (password.length === 0 || password.length > 1024) {
+    throw new Error("Password must not be empty and must be 1024 characters or fewer.");
   }
   const confirmation = await promptSecret("Confirm password: ");
   if (password !== confirmation) throw new Error("Passwords do not match.");
@@ -98,9 +98,9 @@ async function main() {
         return;
       }
 
-      const tenantValue = process.env.SULTHAN_HARDWARE_TENANT_ID;
+      const tenantValue = process.env.STORE_TENANT_ID;
       if (!tenantValue || !/^[1-9]\d*$/.test(tenantValue) || !Number.isSafeInteger(Number(tenantValue))) {
-        throw new Error("SULTHAN_HARDWARE_TENANT_ID must be a safe positive integer.");
+        throw new Error("STORE_TENANT_ID must be a safe positive integer.");
       }
 
       const tenantId = Number(tenantValue);
@@ -113,7 +113,7 @@ async function main() {
         [email, passwordHash, tenantId],
       );
       if (!result.rows[0]) {
-        throw new Error(`No tenant with ID ${tenantId} exists. Check SULTHAN_HARDWARE_TENANT_ID.`);
+        throw new Error(`No tenant with ID ${tenantId} exists. Check STORE_TENANT_ID.`);
       }
       process.stdout.write(`Admin account created for ${email}. Ask the owner to change the temporary password after sign-in.\n`);
       return;

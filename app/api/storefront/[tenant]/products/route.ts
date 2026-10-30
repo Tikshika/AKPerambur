@@ -42,7 +42,7 @@ export async function GET(_request: Request, { params }: RouteProps) {
   try {
     const tenant = await pool.query<{ id: number }>(
       "select id from public.tenants where id = $1 and slug = $2 limit 1",
-      [tenantId, storefront.slug],
+      [tenantId, storefront.databaseSlug],
     );
     if (!tenant.rows[0]) {
       return NextResponse.json(

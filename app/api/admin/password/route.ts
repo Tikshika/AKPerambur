@@ -32,10 +32,10 @@ export async function POST(request: Request) {
     typeof currentPassword !== "string" ||
     typeof newPassword !== "string" ||
     currentPassword.length > 1024 ||
-    newPassword.length < 12 ||
+    newPassword.length === 0 ||
     newPassword.length > 1024
   ) {
-    return NextResponse.json({ error: "Use a new password with at least 12 characters." }, { status: 400 });
+    return NextResponse.json({ error: "The new password must not be empty and must be 1024 characters or fewer." }, { status: 400 });
   }
 
   try {

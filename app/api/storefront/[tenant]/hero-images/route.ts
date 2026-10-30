@@ -23,7 +23,7 @@ export async function GET(_request: Request, { params }: RouteProps) {
     const pool = getDatabasePool();
     const tenant = await pool.query(
       "select id from public.tenants where id = $1 and slug = $2 limit 1",
-      [tenantId, storefront.slug],
+      [tenantId, storefront.databaseSlug],
     );
     if (!tenant.rows[0]) {
       return NextResponse.json({ error: "Configured store does not match a database tenant." }, { status: 404 });

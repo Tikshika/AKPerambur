@@ -17,8 +17,8 @@ export function AdminPasswordResetForm() {
     setError("");
     setNotice("");
 
-    if (password.length < 12) {
-      setError("Use a password with at least 12 characters.");
+    if (!password) {
+      setError("Enter a new password.");
       return;
     }
 
@@ -83,7 +83,7 @@ export function AdminPasswordResetForm() {
           autoComplete="new-password"
           className="rounded-lg border border-slate-300 px-3 py-2"
           type="password"
-          minLength={12}
+          maxLength={1024}
           required
           value={password}
           onChange={(event) => setPassword(event.target.value)}
@@ -95,7 +95,7 @@ export function AdminPasswordResetForm() {
           autoComplete="new-password"
           className="rounded-lg border border-slate-300 px-3 py-2"
           type="password"
-          minLength={12}
+          maxLength={1024}
           required
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}

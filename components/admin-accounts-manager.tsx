@@ -242,14 +242,13 @@ export function AdminAccountsManager() {
             type="password"
             autoComplete="new-password"
             required={editingId === null}
-            minLength={12}
             maxLength={1024}
             value={form.temporaryPassword}
             onChange={(event) => setForm({ ...form, temporaryPassword: event.target.value })}
             className="rounded-lg border border-slate-300 px-3 py-2"
           />
           <span className="text-xs font-normal text-slate-500">
-            At least 12 characters. The user must change it at next sign-in.
+            The user must change it at next sign-in.
           </span>
         </label>
         <div className="flex gap-3 md:col-span-2">

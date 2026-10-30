@@ -41,6 +41,7 @@ export default async function TenantPage({ params }: TenantPageProps) {
             <Link className="py-1" href={`/${storefront.slug}`}>Home</Link>
             <Link className="py-1" href={`/${storefront.slug}#products`}>Products</Link>
             <Link className="py-1" href={`/${storefront.slug}#about`}>About</Link>
+            <Link className="py-1" href={`/${storefront.slug}#find-us`}>Find us</Link>
             <Link className="py-1" href="/admin">Admin</Link>
             <StorefrontCartButton
               accent={storefront.accent}
@@ -97,6 +98,36 @@ export default async function TenantPage({ params }: TenantPageProps) {
           </div>
         </div>
       </section>
+
+      {storefront.address && (
+        <section id="find-us" className="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-end sm:justify-between sm:p-8">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Find us</p>
+                <h3 className="mt-2 text-2xl font-bold text-slate-900">Visit {storefront.name}</h3>
+                <p className="mt-2 max-w-2xl text-slate-600">{storefront.address}</p>
+              </div>
+              <a
+                className="inline-flex shrink-0 items-center justify-center rounded-xl px-5 py-3 font-semibold text-white"
+                style={{ backgroundColor: storefront.accent }}
+                href={storefront.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on map
+              </a>
+            </div>
+            <iframe
+              className="h-72 w-full border-0 sm:h-96"
+              title={`Map showing ${storefront.name} at ${storefront.address}`}
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(storefront.mapCoordinates)}&z=17&output=embed`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </section>
+      )}
     </main>
     </StorefrontCartProvider>
   );
