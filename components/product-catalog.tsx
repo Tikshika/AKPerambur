@@ -7,6 +7,7 @@ type ProductCatalogProps = {
   tenantSlug: string;
   currency: string;
   accent: string;
+  accentGreen: string;
   accentSoft: string;
 };
 
@@ -19,7 +20,7 @@ type Product = {
   image_url: string | null;
 };
 
-export function ProductCatalog({ tenantSlug, currency, accent, accentSoft }: ProductCatalogProps) {
+export function ProductCatalog({ tenantSlug, currency, accent, accentGreen, accentSoft }: ProductCatalogProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -65,7 +66,7 @@ export function ProductCatalog({ tenantSlug, currency, accent, accentSoft }: Pro
   return (
     <section id="products" className="mx-auto max-w-6xl px-6 py-10">
       <div className="mb-6">
-        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Products</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.18em]" style={{ color: accentGreen }}>Products</p>
         <h3 className="mt-2 text-3xl font-bold text-slate-900">Available products</h3>
       </div>
 
@@ -86,7 +87,7 @@ export function ProductCatalog({ tenantSlug, currency, accent, accentSoft }: Pro
             const cartQuantity = quantityInCart(product.id);
             const remainingStock = Math.max(0, availableStock - cartQuantity);
             return (
-            <article key={product.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <article key={product.id} className="overflow-hidden rounded-3xl border border-blue-100 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-green-200 hover:shadow-xl hover:shadow-green-950/10">
               {product.image_url ? (
                 <button
                   type="button"

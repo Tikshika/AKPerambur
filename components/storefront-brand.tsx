@@ -4,13 +4,14 @@ import type { StorefrontTenant } from "@/lib/tenant-data";
 
 type StorefrontBrandProps = {
   tenant: Pick<StorefrontTenant, "name" | "logo">;
+  compact?: boolean;
 };
 
-export function StorefrontBrand({ tenant }: StorefrontBrandProps) {
+export function StorefrontBrand({ tenant, compact = false }: StorefrontBrandProps) {
   return (
     <div className="flex min-w-0 items-center gap-3">
       <Link href="/" aria-label={`Go to ${tenant.name} home page`} className="shrink-0">
-        <span className="block aspect-square w-24 overflow-hidden rounded-xl bg-white p-1">
+        <span className={`block aspect-square ${compact ? "w-16 sm:w-20" : "w-24"} overflow-hidden rounded-xl bg-white p-1`}>
           <Image
             src={tenant.logo.src}
             alt={tenant.logo.alt}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { tenants } from "@/lib/tenant-data";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Multi-Tenant Retail Platform",
-  description: "A tenant-aware storefront platform for retail businesses.",
+  title: tenants[0]?.name ?? "Retail Store",
+  description: tenants[0]?.description ?? "A retail storefront.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

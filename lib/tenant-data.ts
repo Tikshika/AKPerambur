@@ -8,6 +8,7 @@ export type StorefrontTenant = {
   tagline: string;
   description: string;
   accent: string;
+  accentGreen: string;
   accentSoft: string;
   currency: string;
   logo: {
@@ -31,6 +32,7 @@ export const tenants: StorefrontTenant[] = [
     description:
       "Discover quality products, reliable service, and a dependable supply partner for your business.",
     accent: "#0757b8",
+    accentGreen: "#07833b",
     accentSoft: "#eff6ff",
     currency: "INR",
     logo: {
