@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useStorefrontCart } from "@/components/storefront-cart";
+import { formatCurrency } from "@/lib/format-currency";
 
 type ProductCatalogProps = {
   tenantSlug: string;
@@ -112,7 +113,7 @@ export function ProductCatalog({ tenantSlug, currency, accent, accentGreen, acce
                 <h4 className="text-lg font-semibold text-slate-900">{product.name}</h4>
                 {product.description && <p className="mt-2 text-sm text-slate-600">{product.description}</p>}
                 <p className="mt-4 text-xl font-bold" style={{ color: accent }}>
-                  {currency} {product.price}
+                  {formatCurrency(product.price, currency)}
                 </p>
                 <p className="mt-1 text-sm text-slate-500">{remainingStock} in stock</p>
                 {cartQuantity > 0 ? (

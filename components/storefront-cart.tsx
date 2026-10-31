@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { formatCurrency } from "@/lib/format-currency";
 
 export type CartProduct = {
   id: number;
@@ -296,11 +297,11 @@ export function StorefrontCartButton({
                         <div className="flex justify-between gap-3">
                           <h3 className="font-semibold text-slate-900">{product.name}</h3>
                           <p className="shrink-0 font-semibold text-slate-900">
-                            {currency} {(product.price * quantity).toFixed(2)}
+                            {formatCurrency(product.price * quantity, currency)}
                           </p>
                         </div>
                         <p className="mt-1 text-sm text-slate-500">
-                          {currency} {product.price.toFixed(2)} each
+                          {formatCurrency(product.price, currency)} each
                         </p>
                         <div className="mt-3 inline-flex items-center overflow-hidden rounded-lg border border-slate-200">
                           <button
@@ -364,7 +365,7 @@ export function StorefrontCartButton({
                     )}
                     <div className="mt-4 flex justify-between text-lg font-bold text-slate-900">
                       <span>Total</span>
-                      <span>{currency} {total.toFixed(2)}</span>
+                      <span>{formatCurrency(total, currency)}</span>
                     </div>
                     <p className="mt-2 text-xs text-slate-500">Delivery and payment are arranged with the store.</p>
                     <button
